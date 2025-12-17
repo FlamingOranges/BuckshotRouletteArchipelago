@@ -3,6 +3,9 @@ from BaseClasses import Item, ItemClassification
 class BuckshotItem(Item):
     game = "Buckshot Roulette"
 
+# Core item count: 12
+
+# Total count: 23
 
 item_table = {
     # Core Progression
@@ -34,9 +37,35 @@ item_table = {
 
     # Traps
     "Shell Inversion": (ItemClassification.trap, 622888022),
-    "Health Loss": (ItemClassification.trap, 622888023),
+    "Health Loss": (ItemClassification.trap, 622888023)
 }
 
+core_items = [
+    "Pills",
+    "DoubleOrNothingTo500",
+    "BurnerUnlock",
+    "AdrenalineUnlock",
+    "MagnifyingUnlock",
+    "InverterUnlock", 
+    "BeerUnlock",
+    "CigarettesUnlock",
+    "MedicineUnlock",
+    "HandSawUnlock",
+    "HandcuffsUnlock"
+]
 
+helpful_items = [
+    "Burner", 
+    "Adrenaline",
+    "Magnifying Glass",
+    "Inverter",
+    "Beer",
+    "Cigarettes",
+    "Medicine",
+    "Hand Saw",
+    "Handcuffs"
+]
 
-
+trap_items = [
+    "Shell Inversion", "Health Loss"
+]

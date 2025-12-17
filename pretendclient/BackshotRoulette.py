@@ -1,0 +1,1 @@
+# pretend game of buckshot just to practice interface with archipelago
