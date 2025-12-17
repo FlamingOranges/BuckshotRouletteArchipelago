@@ -26,9 +26,14 @@ DorN2_table = {
     "1000k": 622888112,
 }
 
+shoot_self_table = {
+    "Shoot 1 Blank": 622888113,
+    "Shoot 1 Live": 622888114,
+    "Shoot 3 Blanks": 622888115,
+    "Shoot 3 Lives": 622888116
+}
+
 # More locations to possibly come:
 #   - Listen to music
-#   - Shoot self
-#   - Shoot self with blank
 #   - Kill dealer (repeatable?)
 

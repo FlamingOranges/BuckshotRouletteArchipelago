@@ -40,9 +40,7 @@ item_table = {
     "Health Loss": (ItemClassification.trap, 622888023)
 }
 
-core_items = [
-    "Pills",
-    "DoubleOrNothingTo500",
+unlockable_items = [
     "BurnerUnlock",
     "AdrenalineUnlock",
     "MagnifyingUnlock",

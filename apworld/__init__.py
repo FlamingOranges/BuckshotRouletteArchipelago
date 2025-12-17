@@ -1,10 +1,9 @@
 from Rules import add_rule, set_rule, forbid_item, add_item_rule #@TODO: fix this later for proper pathway once in archipelago (should be worlds.generic.rules)
 import settings
 import typing
-#from .Options import MyGameOptions  # the options we defined earlier
-# No options currently
+from .options import BuckshotOptions  
 from .Items import item_table, BuckshotItem  # data used below to add items to the World
-from .Locations import base_locations_table, DorN1_table, DorN2_table, BuckshotLocation  # same as above
+from .Locations import base_locations_table, DorN1_table, DorN2_table, shoot_self_table, BuckshotLocation  # same as above
 from AutoWorld import World
 from BaseClasses import Region, Location, Entrance, Item, ItemClassification
 
@@ -15,7 +14,7 @@ This will be fixed in the future when this is playable
 '''
 
 
-# All structure here copied from example in "world api" docs. Other inspiration taken from other implemented worlds
+# All structure here copied from example in "world api" docs. Other inspiration taken from other implemented worlds & APQuest
 
 class BuckshotRouletteWorld(World):
     """Play Russian roulette with a 12-gauge shotgun."""
@@ -46,26 +45,22 @@ class BuckshotRouletteWorld(World):
     item_name_to_id = {name: item_table[name][1] for name
                         in item_table.keys()}
     
-    #Extra: Adding one item for test purposes
-    item_name_to_id.update({"Hand Saw": item_table["Hand Saw"][1]})
-    
-    #@TODO: make this one statement
-    location_name_to_id = {name: base_locations_table[name] for name
-                        in base_locations_table.keys()}
-    location_name_to_id.update({name: DorN1_table[name] for name
-                        in DorN1_table.keys()})
-    location_name_to_id.update({name: DorN2_table[name] for name
-                        in DorN2_table.keys()})
-    
-    
+    options_dataclass = BuckshotOptions
+    options: BuckshotOptions
+        
 
+
+    location_name_to_id = {}
+
+    for table in [base_locations_table, DorN1_table, DorN2_table, shoot_self_table]:
+        location_name_to_id.update(table)
+
+            
 
 
     def create_item(self, name: str) -> BuckshotItem:
         return BuckshotItem(name, item_table[name][0], item_table[name][1], self.player)
     
-    def create_event(self, event: str) -> BuckshotItem:
-        return BuckshotItem(event, ItemClassification.progression, None, self.player)
     
     def create_regions(self) -> None:
         # Add regions to the multiworld. One of them must use the origin_region_name as its name ("Menu" by default).
@@ -90,21 +85,47 @@ class BuckshotRouletteWorld(World):
         # Two locked areas: Double or Nothing (up to 250,000) and Double or Nothing (infinite)
         BaseGame.add_exits({"Double or Nothing 1": "Pills"}, {"Double or Nothing 1": lambda state: state.has("Pills", self.player)})
         DorN1_R.add_exits({"Double or Nothing 2": "DorN2_R"}, {"Double or Nothing 2": lambda state: state.has("DoubleOrNothingTo500", self.player)})
+
+
+        # Optional areas
+        match self.options.shoot_self:
+
+            case self.options.shoot_self.option_once:
+                BaseGame.add_locations({"Shoot 1 Blank": shoot_self_table["Shoot 1 Blank"], "Shoot 1 Live": shoot_self_table["Shoot 1 Live"]}, BuckshotLocation)
+            
+            case self.options.shoot_self.option_thrice:
+                BaseGame.add_locations(shoot_self_table, BuckshotLocation)
     
     def create_items(self) -> None:
 
-        # Exclusion logic can be added later: from example
+        # Core progression items:
+        self.multiworld.itempool.append(map(self.create_item, ["Pills", "DoubleOrNothingTo500"]))
 
         # Adding progression items: these are required to complete the game
-        for item in map(self.create_item, Items.core_items):
+        # can be customized but not implemented yet
+
+        unlockables = Items.unlockable_items.copy()
+        for i in range(self.options.starting_items):
+            unlockables.pop(self.random.randint(0, len(unlockables) - 1))
+
+        for item in map(self.create_item, unlockables):
             self.multiworld.itempool.append(item)
 
-        # itempool and number of locations should match up.
-        # If this is not the case we want to fill the itempool with junk.
-        junk = 0  # calculate this based on player options
+        junk = len(self.multiworld.get_unfilled_locations(self.player)) - (9 - self.options.starting_items)  # 9 starting items, minus starting items already given as determined by options
+        traps = junk * self.options.traps // 100
+        filler = junk - traps
 
-        # @TODO: implement junk item creation (helpful + traps, set ratio based on settings?)        
-        #self.multiworld.itempool += [self.create_item("nothing") for _ in range(junk)]
+        for _ in range(traps):
+            trap_item = self.random.choice(Items.trap_items)
+            self.multiworld.itempool.append(self.create_item(trap_item))
+        
+        for _ in range(filler):
+            filler_item = self.random.choice(Items.helpful_items)
+            self.multiworld.itempool.append(self.create_item(filler_item))
+        
+        
+
+        
     
     
     def set_rules(self) -> None:

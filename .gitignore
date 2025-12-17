@@ -3,7 +3,9 @@ apworld/settings.py
 apworld/AutoWorld.py
 apworld/Rules.py
 apworld/Utils.py
-apworld/Options.py
+apworld/APOptions.py
 
 build/BuckshotRoulette/
 build\build.ps1
+
+pretendclient/
