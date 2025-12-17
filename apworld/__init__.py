@@ -55,8 +55,6 @@ class BuckshotRouletteWorld(World):
     for table in [base_locations_table, DorN1_table, DorN2_table, shoot_self_table]:
         location_name_to_id.update(table)
 
-            
-
 
     def create_item(self, name: str) -> BuckshotItem:
         return BuckshotItem(name, item_table[name][0], item_table[name][1], self.player)
@@ -84,7 +82,7 @@ class BuckshotRouletteWorld(World):
 
         # Two locked areas: Double or Nothing (up to 250,000) and Double or Nothing (infinite)
         BaseGame.add_exits({"Double or Nothing 1": "Pills"}, {"Double or Nothing 1": lambda state: state.has("Pills", self.player)})
-        DorN1_R.add_exits({"Double or Nothing 2": "DorN2_R"}, {"Double or Nothing 2": lambda state: state.has("DoubleOrNothingTo500", self.player)})
+        DorN1_R.add_exits({"Double or Nothing 2": "DorN2_R"}, {"Double or Nothing 2": lambda state: state.has("DoubleOrNothingLv2", self.player)})
 
 
         # Optional areas
@@ -99,7 +97,8 @@ class BuckshotRouletteWorld(World):
     def create_items(self) -> None:
 
         # Core progression items:
-        self.multiworld.itempool.append(map(self.create_item, ["Pills", "DoubleOrNothingTo500"]))
+        for item in map(self.create_item, ["Pills", "DoubleOrNothingLv2"]):
+            self.multiworld.itempool.append(item)
 
         # Adding progression items: these are required to complete the game
         # can be customized but not implemented yet
@@ -134,6 +133,7 @@ class BuckshotRouletteWorld(World):
         set_rule(self.multiworld.get_region("Double or Nothing 1", self.player),
                  lambda state: state.has("Pills", self.player))
         
+
         # Need two unlocks to access DorN1 (as well as pills, obviously)
         set_rule(self.multiworld.get_region("Double or Nothing 1", self.player),
                  lambda state: state.count_group(item_name_group="ItemUnlocks", player=self.player) >= 2)

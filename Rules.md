@@ -28,7 +28,5 @@ Additional progression items:
 * "HandSawUnlock" - Unlocks the ability to pull the hand saw.
 * "HandcuffsUnlock" - Unlocks the ability to pull the handcuffs.
 
-Any *Two* of these are required to access Double or Nothing Level 1 (the pills).
-Any *Four* of these are required to access Double or Nothing Level 2.
 
 Customization options will be added later to adjust these requirements
