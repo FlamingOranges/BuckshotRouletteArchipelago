@@ -32,6 +32,12 @@ no
 ### then why is it so bad
 i mostly just copied the examples from the docs and newly made apquest (literally dropped mid-development). i only have a rough idea of what im doing. ill get better. i also used trpg's ultrakill code as a reference in some points since i understand ultrakill (but i cant say the same for the code)
 
+### why isnt this in the AP after dark server
+im scared (you found this too early)
+
+#### why is there a powershell script in the build folder
+i put it in the gitignore but it still got committed. way she goes i guess
+
 
 ## Next:
 - make options
