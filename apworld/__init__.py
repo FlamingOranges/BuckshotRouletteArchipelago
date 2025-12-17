@@ -46,6 +46,9 @@ class BuckshotRouletteWorld(World):
     item_name_to_id = {name: item_table[name][1] for name
                         in item_table.keys()}
     
+    #Extra: Adding one item for test purposes
+    item_name_to_id.update({"Hand Saw": item_table["Hand Saw"][1]})
+    
     #@TODO: make this one statement
     location_name_to_id = {name: base_locations_table[name] for name
                         in base_locations_table.keys()}
@@ -118,7 +121,8 @@ class BuckshotRouletteWorld(World):
         set_rule(self.multiworld.get_region("Double or Nothing 2", self.player),
                  lambda state: state.count_group(item_name_group="ItemUnlocks", player=self.player) >= 4)
         
-        self.multiworld.get_location("1000k", self.player).place_locked_item(self.create_event("Victory"))
+        endregion = self.multiworld.get_region("Double or Nothing 2", self.player)
+        endregion.add_event("1000k", "Victory", location_type=BuckshotLocation, item_type=BuckshotItem)
         self.multiworld.completion_condition[self.player] = lambda state: state.has("Victory", self.player)
 
         from Utils import visualize_regions

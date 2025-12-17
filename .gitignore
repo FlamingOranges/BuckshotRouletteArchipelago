@@ -4,4 +4,5 @@ apworld/AutoWorld.py
 apworld/Rules.py
 apworld/Utils.py
 
-build/BuckshotRoulette/ 
+build/BuckshotRoulette/
+build\build.ps1
