@@ -4,7 +4,7 @@ this is the apworld code (and soon client + mod) for buckshot roulette support f
 
 note: this version doesnt actually work were you to import it as it is right now, my current testing environment is a bit different. some imports will need to be adjusted (they are usually commented)
 
-see the game rules in <a>Rules.md</a>
+see the game rules in [Rules.md](https://github.com/FlamingOranges/BuckshotRouletteArchipelago/blob/main/Rules.md)
 
 
 faq:
