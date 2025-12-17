@@ -3,6 +3,7 @@ apworld/settings.py
 apworld/AutoWorld.py
 apworld/Rules.py
 apworld/Utils.py
+apworld/Options.py
 
 build/BuckshotRoulette/
 build\build.ps1

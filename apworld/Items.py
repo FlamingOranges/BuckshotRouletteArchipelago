@@ -10,7 +10,7 @@ class BuckshotItem(Item):
 item_table = {
     # Core Progression
     "Pills": (ItemClassification.progression, 622888001),
-    "DoubleOrNothingTo500": (ItemClassification.progression, 622888002),
+    "DoubleOrNothingLv2": (ItemClassification.progression, 622888002),
 
     # Helper progression
     # Note: Not really true "progression" but i'm keeping it as is for now
