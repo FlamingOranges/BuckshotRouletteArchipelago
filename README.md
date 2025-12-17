@@ -2,7 +2,7 @@
 
 this is the apworld code (and soon client + mod) for buckshot roulette support for archipelago
 
-note: this version doesnt actually work, my current testing environment is a bit different. some imports will need to be adjusted (they are usually commented)
+note: this version doesnt actually work were you to import it as it is right now, my current testing environment is a bit different. some imports will need to be adjusted (they are usually commented)
 
 see the game rules in <a>Rules.md</a>
 
