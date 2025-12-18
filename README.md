@@ -37,7 +37,6 @@ i put it in the gitignore but it still got committed. way she goes i guess
 
 
 ## Next:
-- make options
 - make client 
 - make game mod (this part scares me)
 - make tests (lol)
